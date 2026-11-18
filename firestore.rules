@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    match /listings/{id} {
+      allow read: if signedIn() &&
+        (resource.data.status == 'approved' || resource.data.ownerUid == request.auth.uid);
+      allow create: if signedIn() &&
+        request.resource.data.keys().hasAll(['title', 'priceCents', 'ownerUid', 'status', 'createdAt']) &&
+        request.resource.data.keys().hasOnly(['title', 'priceCents', 'ownerUid', 'status', 'createdAt']) &&
+        request.resource.data.ownerUid == request.auth.uid &&
+        request.resource.data.status == 'pending' &&
+        request.resource.data.createdAt == request.time &&
+        request.resource.data.title is string &&
+        request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 100 &&
+        request.resource.data.priceCents is int &&
+        request.resource.data.priceCents >= 0 && request.resource.data.priceCents <= 100000;
+    }
+    match /users/{uid}/notifications/{id} {
+      allow read: if signedIn() && request.auth.uid == uid;
+    }
+  }
+}

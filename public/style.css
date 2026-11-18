@@ -1,0 +1,16 @@
+* { box-sizing: border-box }
+body { margin: 0; background: #f6f7ee; color: #182d29; font: 1rem/1.5 system-ui,sans-serif }
+main { max-width: 960px; margin: auto; padding: 2rem 1.25rem }
+header { padding: 1rem 0 1.5rem; border-bottom: 3px solid #225b4a }
+.brand { color: #225b4a; font-weight: 800 }
+h1 { font-size: clamp(2rem, 6vw, 3.8rem); line-height: 1.1; margin: .3em 0 }
+section { padding: 1rem 0; border-bottom: 1px solid #b3c8bd }
+form, .columns { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr }
+form { grid-template-columns: 2fr 1fr auto; align-items: end }
+.columns > section { min-width: 0 }
+input, button { display: block; font: inherit; padding: .6rem .75rem; border-radius: .35rem }
+input { width: 100%; background: white; border: 1px solid #5d766c }
+button { cursor: pointer; background: #225b4a; color: white; border: 1px solid #225b4a }
+button:disabled { opacity: .55; cursor: default }
+ul { padding-left: 1.25rem; overflow-wrap: anywhere }
+@media (max-width: 620px) { form, .columns { grid-template-columns: 1fr } }
